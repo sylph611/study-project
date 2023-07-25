@@ -5,7 +5,9 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.Comment;
 
+import java.util.LinkedHashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -28,6 +30,11 @@ public class Post extends BaseEntity {
     @Comment("게시글 내용")
     @Column(nullable = false, length = 1000)
     private String content;
+
+    @OrderBy("id")
+    @OneToMany(mappedBy = "post")
+    @ToString.Exclude
+    private final Set<PostComment> postComments = new LinkedHashSet<>();
 
     @Builder
     public Post(long id, String title, String content) {
