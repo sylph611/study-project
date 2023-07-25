@@ -3,11 +3,15 @@ package com.sylph.study.studyproject.domain;
 import com.sylph.study.studyproject.base.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.ToString;
 import org.hibernate.annotations.Comment;
 
 @Entity
 @Getter
-@Table(name = "post")
+@ToString
+@Table(name = "post", indexes = {
+        @Index(columnList = "title")
+})
 public class Post extends BaseEntity {
 
     @Id
