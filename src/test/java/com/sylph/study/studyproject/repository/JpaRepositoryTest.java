@@ -39,6 +39,49 @@ class JpaRepositoryTest {
         // Then
         assertThat(posts)
                 .isNotNull()
-                .hasSize(0);
+                .hasSize(1);
+    }
+
+    @DisplayName("insert 테스트")
+    @Test
+    void givenTestData_whenInserting_thenWorksFine() {
+        // Given
+        long previousCount = postRepository.count();
+        Post post = Post.of("new Post","Content");
+
+        // When
+        Post savedPost = postRepository.save(post);
+
+        // Then
+        assertThat(postRepository.count()).isEqualTo(previousCount+1);
+    }
+
+    @DisplayName("update 테스트")
+    @Test
+    void givenTestData_whenUpdating_thenWorksFine() {
+        // Given
+        Post post = postRepository.findById(1L).orElseThrow();
+        String update = "updateTitle";
+        post.setTitle("updateTitle");
+
+        // When
+        Post savedPost = postRepository.saveAndFlush(post);
+
+        // Then
+        assertThat(savedPost).hasFieldOrPropertyWithValue("title", update);
+    }
+
+    @DisplayName("delete 테스트")
+    @Test
+    void givenTestData_whenDeleting_thenWorksFine() {
+        // Given
+        Post post = postRepository.findById(1L).orElseThrow();
+        long previoustPostCount = postRepository.count();
+
+        // When
+        postRepository.delete(post);
+
+        // Then
+        assertThat(postRepository.count()).isEqualTo(previoustPostCount-1);
     }
 }

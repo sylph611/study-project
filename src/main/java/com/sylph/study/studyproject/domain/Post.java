@@ -24,6 +24,7 @@ public class Post extends BaseEntity {
     private long id;
 
     @Comment("게시글 제목")
+    @Setter
     @Column(nullable = false, length = 1000)
     private String title;
 
