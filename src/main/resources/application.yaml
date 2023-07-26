@@ -27,7 +27,7 @@ spring:
     console:
       enabled: false
 
-## ?? ??
+## 로그
 logging:
   level:
     root: INFO
